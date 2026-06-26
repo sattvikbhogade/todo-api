@@ -78,3 +78,18 @@ app.get('/todos/', async (request, response) => {
   const data = await db.all(query)
   response.send(data)
 })
+
+
+//API_2(Returns a specific todo based on the todo ID)
+app.get("/todos/:todoId/", async (request, response) => {
+    const {todoId} = request.params;
+
+    const getTodoQuery = `
+        SELECT * 
+        FROM todo 
+        WHERE id = ${todoId};
+    `;
+
+    const todo = await db.get(getTodoQuery);
+    response.send(todo);
+})
