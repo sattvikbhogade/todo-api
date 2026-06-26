@@ -113,3 +113,44 @@ app.post("/todos/", async (request, response) => {
 
     response.send("Todo Successfully Added")
 })
+
+
+//API_4(Updates the details of a specific todo based on the todo ID)
+app.put("/todos/:todoId/", async (request, response) => {
+    const { todoId } = request.params;
+    const {status, priority, todo} = request.body;
+
+    if (status !== undefined) {
+        const updateStatusQuery = `
+            UPDATE todo 
+            SET status = '${status}'
+            WHERE id = ${todoId};
+        `;
+
+        await db.run(updateStatusQuery);
+        response.send("Status Updated");
+    }
+
+    else if(priority !== undefined) {
+        const updateStatusQuery = `
+            UPDATE todo 
+            SET priority = '${priority}'
+            WHERE id = ${todoId};
+        `;
+
+        await db.run(updateStatusQuery);
+        response.send("Priority Updated");
+    }
+
+    else if(priority !== undefined) {
+        const updateStatusQuery = `
+            UPDATE todo 
+            SET todo = '${todo}'
+            WHERE id = ${todoId};
+        `;
+
+        await db.run(updateStatusQuery);
+        response.send("Todo Updated");
+    }
+
+})
