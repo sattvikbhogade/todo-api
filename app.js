@@ -93,3 +93,23 @@ app.get("/todos/:todoId/", async (request, response) => {
     const todo = await db.get(getTodoQuery);
     response.send(todo);
 })
+
+
+//API_3(Create a todo in the todo table)
+app.post("/todos/", async (request, response) => {
+    const{ id, todo, prioity, status } = request.body;
+
+    const addTodoQuery = `
+        INSERT INTO todo (id, todo, priority, status)
+        VALUES(
+            ${id},
+            '${todo}',
+            '${prioity}',
+            '${status}'
+        );
+    `;
+
+    await db.run((addTodoQuery));
+
+    response.send("Todo Successfully Added")
+})
