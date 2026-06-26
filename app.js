@@ -32,9 +32,7 @@ const initializeDBAndServer = async () => {
             )
         `)
 
-        app.listen(3000, () => {
-      console.log("Server Running");
-    });
+        
   } catch (e) {
     console.log(e.message)
   }
@@ -97,14 +95,14 @@ app.get("/todos/:todoId/", async (request, response) => {
 
 //API_3(Create a todo in the todo table)
 app.post("/todos/", async (request, response) => {
-    const{ id, todo, prioity, status } = request.body;
+    const{ id, todo, priority, status } = request.body;
 
     const addTodoQuery = `
         INSERT INTO todo (id, todo, priority, status)
         VALUES(
             ${id},
             '${todo}',
-            '${prioity}',
+            '${priority}',
             '${status}'
         );
     `;
@@ -132,24 +130,24 @@ app.put("/todos/:todoId/", async (request, response) => {
     }
 
     else if(priority !== undefined) {
-        const updateStatusQuery = `
+        const updatePriorityQuery = `
             UPDATE todo 
             SET priority = '${priority}'
             WHERE id = ${todoId};
         `;
 
-        await db.run(updateStatusQuery);
+        await db.run(updatePriorityQuery);
         response.send("Priority Updated");
     }
 
-    else if(priority !== undefined) {
-        const updateStatusQuery = `
+    else if(todo !== undefined) {
+        const updateTodoQuery = `
             UPDATE todo 
             SET todo = '${todo}'
             WHERE id = ${todoId};
         `;
 
-        await db.run(updateStatusQuery);
+        await db.run(updateTodoQuery);
         response.send("Todo Updated");
     }
 
